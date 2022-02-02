@@ -55,6 +55,9 @@ class NewProjectDialog extends StatelessWidget {
                     decoration: const InputDecoration(labelText: 'Users'),
                   ),
                   const Divider(),
+                  const ListTile(
+                    title: Text('Tasks'),
+                  ),
                   const Tasks(),
                   Builder(builder: (context) {
                     return ElevatedButton(
@@ -112,64 +115,6 @@ class _TasksState extends State<Tasks> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ListTile(
-              title: const Text('Tasks'),
-              trailing: IconButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextField(
-                              controller: controller,
-                              decoration:
-                                  const InputDecoration(labelText: 'Task name'),
-                            ),
-                            MultiSelectDialogField<UserModel?>(
-                              buttonText: const Text('Users for the task'),
-                              title: const Text('Users'),
-                              items: [
-                                ...UsersRepository().readAllUser().map(
-                                      (e) => MultiSelectItem(e, e.name),
-                                    )
-                              ],
-                              initialValue: users,
-                              onConfirm: (value) {
-                                users.clear();
-                                for (var item in value) {
-                                  if (item != null) {
-                                    users.add(item);
-                                  }
-                                }
-                                setState(() {});
-                              },
-                            ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                if (controller.text.isEmpty) return;
-                                field.didChange([
-                                  ...field.value ?? [],
-                                  TaskModel(name: controller.text, users: users)
-                                ]);
-                                controller.clear();
-                                users = [];
-                                setState(() {});
-                                Navigator.pop(context);
-                              },
-                              child: const Text('Add task'),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                },
-                icon: const Icon(Icons.add),
-              ),
-            ),
             for (var item in field.value ?? <TaskModel>[])
               ListTile(
                 title: Text(item.name),
@@ -182,6 +127,42 @@ class _TasksState extends State<Tasks> {
                   icon: const Icon(Icons.delete),
                 ),
               ),
+            TextField(
+              controller: controller,
+              decoration: const InputDecoration(labelText: 'Task name'),
+            ),
+            MultiSelectDialogField<UserModel?>(
+              buttonText: const Text('Users for the task'),
+              title: const Text('Users'),
+              items: [
+                ...UsersRepository().readAllUser().map(
+                      (e) => MultiSelectItem(e, e.name),
+                    )
+              ],
+              initialValue: users,
+              onConfirm: (value) {
+                users.clear();
+                for (var item in value) {
+                  if (item != null) {
+                    users.add(item);
+                  }
+                }
+                setState(() {});
+              },
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                if (controller.text.isEmpty) return;
+                field.didChange([
+                  ...field.value ?? [],
+                  TaskModel(name: controller.text, users: users)
+                ]);
+                controller.clear();
+                users = [];
+                setState(() {});
+              },
+              child: const Text('Sava new task'),
+            ),
           ],
         );
       },

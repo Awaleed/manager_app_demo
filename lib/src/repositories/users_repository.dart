@@ -1,6 +1,6 @@
+
 import 'package:hive/hive.dart';
 
-import 'dart:collection';
 import '../models/user.dart';
 
 const String userBoxName = 'UserBox';

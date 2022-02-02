@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:manager_app/src/models/user.dart';
-import 'package:manager_app/src/repositories/users_repository.dart';
-import 'package:manager_app/src/screens/main/dialogs/new_project.dart';
-import 'package:manager_app/src/screens/my_tasks/my_tasks.dart';
-import 'package:manager_app/src/screens/projects/my_projects.dart';
-import 'package:manager_app/src/screens/splash/splash.dart';
 import 'package:validators/validators.dart';
+
+import '../../repositories/users_repository.dart';
+import '../my_tasks/my_tasks.dart';
+import '../projects/my_projects.dart';
+import '../splash/splash.dart';
+import 'dialogs/new_project.dart';
 
 class MainScreen extends StatelessWidget {
   static MaterialPageRoute route() => MaterialPageRoute(
